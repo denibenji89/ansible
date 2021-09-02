@@ -71,20 +71,21 @@
 
     # - name: Create database user with name 'dbuser' and password '12345' with all database privileges
     #   mysql_user: name=dbuser password=12345 priv='*.*:ALL' state=present host=localhost login_user=root login_password=mysql@12345
-
+    - name: Remove all anonymous user accounts
+      mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+        # login_user: root
+        # login_password: "{{ mysql_root_password }}"
+        
     - name: Set the root password
       mysql_user:
         name: root
         password: "{{ mysql_root_password }}"
         login_unix_socket: /var/run/mysqld/mysqld.sock
 
-    - name: Remove all anonymous user accounts
-      mysql_user:
-        name: ''
-        host_all: yes
-        state: absent
-        login_user: root
-        login_password: "{{ mysql_root_password }}"
+    
 
     - name: Remove the default MySQL test database
       mysql_db:
