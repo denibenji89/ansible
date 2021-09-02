@@ -55,8 +55,8 @@
     - name: Start Service MySQL
       service: name=mysql state=started enabled=yes
 
-    - name: Remove anonymous users
-      mysql_user: name='' host_all=yes state=absent 
+    # - name: Remove anonymous users
+    #   mysql_user: name='' host_all=yes state=absent 
 
     # - name: Set Root Password
     #   mysql_user: name=root password={{ mysql_root_password }} host={{item}}
