@@ -78,7 +78,7 @@
         state: absent
         # login_user: root
         # login_password: "{{ mysql_root_password }}"
-        
+
     - name: Set the root password
       mysql_user:
         name: root
@@ -153,4 +153,9 @@
     - name: Restart Apache
       service:
         name: apache2
+        state: restarted
+
+    - name: Restart MySQL
+      service:
+        name: mysql
         state: restarted
