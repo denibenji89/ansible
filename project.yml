@@ -55,6 +55,9 @@
     - name: Start Service MySQL
       service: name=mysql state=started enabled=yes
     
+    - name: Echo password
+      debug: 
+        msg: "echo {{ http_conf }}"
     # - name: Remove anonymous users
     #   mysql_user: name='' host_all=yes state=absent 
 
