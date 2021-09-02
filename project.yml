@@ -70,11 +70,11 @@
     #     - ::1
     #     - benjaminc
 
-    - name: Create a new database with name 'simplilearn'
-      mysql_db: name=simplilearn state=present  login_user=apple login_password=mysql@12345
+    # - name: Create a new database with name 'simplilearn'
+    #   mysql_db: name=simplilearn state=present  login_user=apple login_password=mysql@12345
 
-    - name: Create database user with name 'dbuser' and password '12345' with all database privileges
-      mysql_user: name=apple password=12345 priv='*.*:ALL' state=present host=localhost login_user=root login_password=mysql@12345
+    # - name: Create database user with name 'dbuser' and password '12345' with all database privileges
+    #   mysql_user: name=apple password=12345 priv='*.*:ALL' state=present host=localhost login_user=root login_password=mysql@12345
     
     - name: Remove all anonymous user accounts
       mysql_user:
