@@ -5,10 +5,10 @@
     - vars/default.yml
 
   tasks:
-    # - name: Run "apt-get update" and "apt-get upgrade"
-    #   apt:
-    #     update_cache: yes
-    #     upgrade: dist
+    - name: Run "apt-get update" and "apt-get upgrade"
+      apt:
+        update_cache: yes
+        upgrade: dist
 
     - name: Install Apache2 & PHP extension, PHP, MySQL 
       apt: name={{ item }} update_cache=yes state=latest
