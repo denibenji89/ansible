@@ -74,7 +74,7 @@
 
     - name: Set the root password
       mysql_user:
-        name: root
+        name: benjaminc
         password: "{{ mysql_root_password }}"
         login_unix_socket: /var/run/mysqld/mysqld.sock
 
@@ -83,7 +83,7 @@
         name: ''
         host_all: yes
         state: absent
-        login_user: benjaminc
+        login_user: root
         login_password: "{{ mysql_root_password }}"
 
     - name: Remove the default MySQL test database
