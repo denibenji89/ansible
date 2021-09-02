@@ -51,12 +51,6 @@
       tags: [ apache ]
 
   # MySQL Configuration
-    - name: Install Python mysql package
-      pip: name=pymysql state=present
-
-    - name: Remove anonymous users
-      mysql_user: name='' host_all=yes state=absent 
-
     - name: Set Root Password
       mysql_user: name=root password={{ mysql_root_password }} host={{item}}
       with_items: 
@@ -64,7 +58,10 @@
         - 127.0.0.1
         - ::1
         - benjaminc
-    
+
+    - name: Remove anonymous users
+      mysql_user: name='' host_all=yes state=absent 
+      
     # - name: Create a new database with name 'simplilearn'
     #   mysql_db: name=simplilearn state=present  login_user=root login_password=mysql@12345
 
