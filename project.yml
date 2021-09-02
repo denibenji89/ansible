@@ -17,6 +17,7 @@
     - name: Install PHP Extensions
       apt: name={{ item }} update_cache=yes state=latest
       loop: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
+      ignore_errors: yes
 
   # Apache Configuration
     - name: Create document root
@@ -61,7 +62,7 @@
 
     - name: Remove anonymous users
       mysql_user: name='' host_all=yes state=absent 
-      
+
     # - name: Create a new database with name 'simplilearn'
     #   mysql_db: name=simplilearn state=present  login_user=root login_password=mysql@12345
 
