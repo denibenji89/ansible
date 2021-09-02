@@ -5,10 +5,10 @@
     - vars/default.yml
 
   tasks:
-    - name: Run "apt-get update" and "apt-get upgrade"
-      apt:
-        update_cache: yes
-        upgrade: dist
+    # - name: Run "apt-get update" and "apt-get upgrade"
+    #   apt:
+    #     update_cache: yes
+    #     upgrade: dist
 
     - name: Install Apache2 & PHP extension, PHP, MySQL 
       apt: name={{ item }} update_cache=yes state=latest
@@ -52,6 +52,12 @@
       tags: [ apache ]
 
   # MySQL Configuration
+    - name: Start Service mysqld
+      service: name=mysql state=started enabled=yes
+    
+    - name: Remove anonymous users
+      mysql_user: name='' host_all=yes state=absent 
+
     - name: Set Root Password
       mysql_user: name=root password={{ mysql_root_password }} host={{item}}
       with_items: 
@@ -59,9 +65,6 @@
         - 127.0.0.1
         - ::1
         - benjaminc
-
-    - name: Remove anonymous users
-      mysql_user: name='' host_all=yes state=absent 
 
     # - name: Create a new database with name 'simplilearn'
     #   mysql_db: name=simplilearn state=present  login_user=root login_password=mysql@12345
