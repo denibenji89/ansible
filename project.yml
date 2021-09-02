@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: local
   become: true
   vars_files:
     - vars/default.yml
@@ -28,7 +28,7 @@
         mode: '0755'
       tags: [ apache ]
 
-    - name: Set up Apache VirtualHost
+    - name: Set up Apache Conf file and create Index files
       template:
         src: "files/apache.conf.j2"
         dest: "/etc/apache2/sites-available/{{ http_conf }}"
@@ -63,7 +63,7 @@
         - localhost
         - 127.0.0.1
         - ::1
-        - apavanwankhade4
+        - benjaminc
     
     - name: Create a new database with name 'simplilearn'
       mysql_db: name=simplilearn state=present  login_user=root login_password=mysql@12345
@@ -147,11 +147,11 @@
       shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type f -exec chmod 640 {} \\;"
       tags: [ wordpress ]
 
-    - name: Set up wp-config
-      template:
-        src: "files/wp-config.php.j2"
-        dest: "/var/www/{{ http_host }}/wordpress/wp-config.php"
-      tags: [ wordpress ]
+    # - name: Set up wp-config
+    #   template:
+    #     src: "files/wp-config.php.j2"
+    #     dest: "/var/www/{{ http_host }}/wordpress/wp-config.php"
+    #   tags: [ wordpress ]
 
   handlers:
     - name: Reload Apache
