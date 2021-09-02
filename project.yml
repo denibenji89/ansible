@@ -54,12 +54,9 @@
   # MySQL Configuration
     - name: Start Service MySQL
       service: name=mysql state=started enabled=yes
-    
-    - name: Echo password
-      debug: 
-        msg: "echo {{ http_conf }}"
-    # - name: Remove anonymous users
-    #   mysql_user: name='' host_all=yes state=absent 
+
+    - name: Remove anonymous users
+      mysql_user: name='' host_all=yes state=absent 
 
     # - name: Set Root Password
     #   mysql_user: name=root password={{ mysql_root_password }} host={{item}}
@@ -69,18 +66,19 @@
     #     - ::1
     #     - benjaminc
 
-    # - name: Create a new database with name 'simplilearn'
-    #   mysql_db: name=simplilearn state=present  login_user=root login_password=mysql@12345
+    - name: Create a new database with name 'simplilearn'
+      mysql_db: name=simplilearn state=present  login_user=apple login_password=mysql@12345
 
-    # - name: Create database user with name 'dbuser' and password '12345' with all database privileges
-    #   mysql_user: name=dbuser password=12345 priv='*.*:ALL' state=present host=localhost login_user=root login_password=mysql@12345
+    - name: Create database user with name 'dbuser' and password '12345' with all database privileges
+      mysql_user: name=apple password=12345 priv='*.*:ALL' state=present host=localhost login_user=root login_password=mysql@12345
+    
     - name: Remove all anonymous user accounts
       mysql_user:
         name: ''
         host_all: yes
         state: absent
-        # login_user: root
-        # login_password: "{{ mysql_root_password }}"
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
 
     - name: Set the root password
       mysql_user:
