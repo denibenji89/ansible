@@ -10,14 +10,14 @@
     #     update_cache: yes
     #     upgrade: dist
 
-    # - name: Install Apache2 & PHP extension, PHP, MySQL 
-    #   apt: name={{ item }} update_cache=yes state=latest
-    #   loop: [ 'apache2', 'mysql-server', 'python3-pymysql', 'php', 'php-mysql', 'libapache2-mod-php' ]
+    - name: Install Apache2 & PHP extension, PHP, MySQL 
+      apt: name={{ item }} update_cache=yes state=absent
+      loop: [ 'apache2', 'mysql-server', 'python3-pymysql', 'php', 'php-mysql', 'libapache2-mod-php' ]
 
-    # - name: Install PHP Extensions
-    #   apt: name={{ item }} update_cache=yes state=latest
-    #   loop: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
-    #   ignore_errors: yes
+    - name: Install PHP Extensions
+      apt: name={{ item }} update_cache=yes state=absent
+      loop: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
+      ignore_errors: yes
 
   # Apache Configuration
     - name: Create document root
@@ -52,7 +52,7 @@
       tags: [ apache ]
 
   # MySQL Configuration
-    - name: Start Service mysqld
+    - name: Start Service MySQL
       service: name=mysql state=started enabled=yes
     
     # - name: Remove anonymous users
@@ -77,7 +77,6 @@
         name: root
         password: "{{ mysql_root_password }}"
         login_unix_socket: /var/run/mysqld/mysqld.sock
-      tags: [ mysql, mysql-root ]
 
     - name: Remove all anonymous user accounts
       mysql_user:
@@ -86,7 +85,6 @@
         state: absent
         login_user: root
         login_password: "{{ mysql_root_password }}"
-      tags: [ mysql ]
 
     - name: Remove the default MySQL test database
       mysql_db:
@@ -94,7 +92,6 @@
         state: absent
         login_user: root
         login_password: "{{ mysql_root_password }}"
-      tags: [ mysql ]
 
     - name: Creates database for WordPress
       mysql_db:
@@ -102,8 +99,7 @@
         state: present
         login_user: root
         login_password: "{{ mysql_root_password }}"
-      tags: [ mysql ]
-
+    
     - name: Create MySQL user for WordPress
       mysql_user:
         name: "{{ mysql_user }}"
@@ -112,7 +108,6 @@
         state: present
         login_user: root
         login_password: "{{ mysql_root_password }}"
-      tags: [ mysql ]
 
   # UFW Configuration
     - name: "UFW - Allow HTTP on port {{ http_port }}"
@@ -120,7 +115,6 @@
         rule: allow
         port: "{{ http_port }}"
         proto: tcp
-      tags: [ system ]
 
   # WordPress Configuration
     - name: Download and unpack latest WordPress
@@ -129,7 +123,6 @@
         dest: "/var/www/{{ http_host }}"
         remote_src: yes
         creates: "/var/www/{{ http_host }}/wordpress"
-      tags: [ wordpress ]
 
     - name: Set ownership
       file:
@@ -138,21 +131,17 @@
         recurse: yes
         owner: www-data
         group: www-data
-      tags: [ wordpress ]
 
     - name: Set permissions for directories
       shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type d -exec chmod 750 {} \\;"
-      tags: [ wordpress ]
 
     - name: Set permissions for files
       shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type f -exec chmod 640 {} \\;"
-      tags: [ wordpress ]
 
     # - name: Set up wp-config
     #   template:
     #     src: "files/wp-config.php.j2"
     #     dest: "/var/www/{{ http_host }}/wordpress/wp-config.php"
-    #   tags: [ wordpress ]
 
   handlers:
     - name: Reload Apache
