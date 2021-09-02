@@ -8,4 +8,4 @@ mysql_password: "Password123"
 #HTTP Settings
 http_host: "ansible"
 http_conf: "ansible.conf"
-http_port: "80"
+http_port: "883"

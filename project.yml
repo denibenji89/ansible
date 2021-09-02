@@ -11,11 +11,11 @@
         upgrade: dist
 
     - name: Install Apache2 & PHP extension, PHP, MySQL 
-      apt: name={{ item }} update_cache=yes state=latest
+      apt: name={{ item }} state=latest
       loop: [ 'apache2', 'mysql-server', 'python3-pymysql', 'php', 'php-mysql', 'libapache2-mod-php' ]
 
     - name: Install PHP Extensions
-      apt: name={{ item }} update_cache=yes state=latest
+      apt: name={{ item }} state=latest
       loop: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
       ignore_errors: yes
 
