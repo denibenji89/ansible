@@ -1,5 +1,5 @@
 ---
-- hosts: local
+- hosts: remote
   become: true
   vars_files:
     - vars/default.yml
@@ -142,10 +142,14 @@
     - name: Set permissions for files
       shell: "/usr/bin/find /var/www/{{ http_host }}/wordpress/ -type f -exec chmod 640 {} \\;"
 
-    # - name: Set up wp-config
-    #   template:
-    #     src: "files/wp-config.php.j2"
-    #     dest: "/var/www/{{ http_host }}/wordpress/wp-config.php"
+    - name: Set up wp-config
+      template:
+        src: "files/wp-config.php.j2"
+        dest: "/var/www/{{ http_host }}/wordpress/wp-config.php"
+    
+    # - name: Having Webpage contents
+    #     copy: content="This is Simplilearn" dest=/var/www/html/index.html
+
 
   handlers:
     - name: Reload Apache
