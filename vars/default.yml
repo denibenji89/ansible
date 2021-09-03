@@ -1,11 +1,22 @@
 ---
 #MySQL Settings
-mysql_root_password: "Benji132"
-mysql_db: "wordpress"
-mysql_user: "denibenji89"
-mysql_password: "Password123"
+# mysql_root_password: "Benji132"
+# mysql_db: "wordpress"
+# mysql_user: "denibenji89"
+# mysql_password: "Password123"
+
+# mysql:
+  root_db_password: "Benji132"
+  db: "wordpress"
+  user: "devops"
+  password: "Password123"
+  hosts:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
 
 #HTTP Settings
 http_host: "ansible"
 http_conf: "ansible.conf"
-http_port: "883"
+http_port: "80"
