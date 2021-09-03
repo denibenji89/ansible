@@ -5,7 +5,7 @@
 # mysql_user: "denibenji89"
 # mysql_password: "Password123"
 
-# mysql:
+mysql:
   root_db_password: "Benji132"
   db: "wordpress"
   user: "devops"
