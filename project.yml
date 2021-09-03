@@ -111,12 +111,12 @@
     #     password: "{{ mysql_root_password }}"
     #     login_unix_socket: /var/run/mysqld/mysqld.sock
 
-    - name: Remove the default MySQL test database
-      mysql_db:
-        name: test
-        state: absent
-        login_user: root
-        login_password: "{{ mysql.root_db_password }}"
+    # - name: Remove the default MySQL test database
+    #   mysql_db:
+    #     name: test
+    #     state: absent
+    #     login_user: root
+    #     login_password: "{{ mysql.root_db_password }}"
 
     - name: Creates database for WordPress
       mysql_db:
